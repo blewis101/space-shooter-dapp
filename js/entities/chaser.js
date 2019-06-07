@@ -3,7 +3,19 @@ class ChaserShip extends Entities
     constructor( scene, x, y ) 
     {
       super( scene, x, y, 'chasers', 'ChaserShip' );
-      //this.play( 'chasers' );
+      this.body.velocity.y = Phaser.Math.Between( 50, 100 );
+      this.shootTimer = this.scene.time.addEvent
+      ({
+          delay: 1000,
+          callback: function() 
+          {
+            var laser = new EnemyLaser( this.scene, this.x, this.y );
+            laser.setScale( this.scaleX );
+            this.scene.enemyLasers.add( laser );
+          },
+            callbackScope: this,
+            loop: true
+      });
 
       this.states = 
         {
@@ -14,18 +26,11 @@ class ChaserShip extends Entities
     }
     preload()
     {
-        this.load.spritesheet( 'chasers', 'images/chasers.png', { frameWidth: 65, frameHeight: 80 });
+    
     }
     create()
     {
-        this.chasers = this.physics.add.sprite( 0,0, 'chasers' );
-        this.anims.create({
-            key: 'chase',
-            frames: this.anims.generateFrameNames( 'chasers', {start: 0, end: 9 }),
-            frameRate: 16,
-            repeat: -1
-        });
-        this.chasers.play( 'chase', this );
+    
     }
     update()
     {

@@ -82,7 +82,7 @@ class SceneMain extends Phaser.Scene
         alignGrid.placeAtIndex( 8, this.chaser );
 
         //The Enemies and Bullet Group That Spawns from the Top
-        this.enemies = this.add.group( 'bombers', 'chasers');
+        this.enemies = this.add.group();
         this.enemyLasers = this.add.group();
         this.playerLasers = this.add.group();
         
@@ -107,13 +107,15 @@ class SceneMain extends Phaser.Scene
                     if ( this.getEnemiesByType( 'bombers' ).length < 5 ) 
                     {
                         enemy = new Bombers( this, Phaser.Math.Between( 0, this.game.config.width ), 0 );
-                        //this.basicEnemy = this.physics.add.sprite( enemy );
-                        //this.basicEnemy.play( 'badfly', this );
+                        this.bomber = this.physics.add.sprite( enemy );
+                        this.bomber.play( 'badfly2', this );
                     }
                 }
                 else
                     {
                         enemy = new ChaserShip( this, Phaser.Math.Between( 0, this.game.config.width ), 0 );
+                        this.chaser = this.physics.add.sprite( enemy );
+                        this.chaser.play( 'badfly3', this );
                     }
 
                 if ( enemy !== null ) 
@@ -169,7 +171,7 @@ class SceneMain extends Phaser.Scene
         for ( var i = 0; i < this.enemies.getChildren().length; i++ ) 
         {
             this.enemy = this.enemies.getChildren()[i];
-            //enemy.update();
+            enemy.update();
         }
     }
     
